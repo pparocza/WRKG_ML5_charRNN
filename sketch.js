@@ -30,7 +30,8 @@ function setup() {
   textInput = document.querySelector('#textInput');
   textLength = document.querySelector('#textLength');
   tempSlider = document.querySelector('#tempSlider');
-  loadStatus = document.querySelector('#loadStatus')
+  loadStatus = document.querySelector('#loadStatus');
+  generateStatus = document.querySelector('#generateStatus');
   lengthText = document.querySelector('#length');
   temperatureText = document.querySelector('#temperature');
   originalText = document.querySelector('#original');
@@ -45,9 +46,7 @@ function setup() {
   // Run generate anytime something changes
   modelSelection.addEventListener('change', loadModel);
   generateButton.onclick = generate;
-  // textInput.addEventListener('change', generate);
-  // textLength.addEventListener('change', generate);
-  // tempSlider.addEventListener('change', generate);
+  tempSlider.addEventListener('change', updateTemp);
 
   console.log(generateButton);
 
@@ -57,11 +56,25 @@ setup();
 
 function loadModel() {
   // Create the LSTM Generator passing it the model directory
+  loadStatus.innerHTML = 'Loading Model';
+  generateStatus.innerHTML = '';
+  originalText.innerHTML = '';
+  predictionText.innerHTML = '';
+  textInput.value = '';
+  textLength.value = '';
+  temperature.value = 0.5;
+  temperatureText.innerHTML = 0.5;
   charRNN = ml5.charRNN('models/' + modelSelection.value + '/', modelReady);
 }
 
 function modelReady() {
   loadStatus.innerHTML = 'Model Loaded';
+}
+
+function updateTemp(){
+
+  temperatureText.innerHTML = tempSlider.value;
+
 }
 
 function generate() {
@@ -72,11 +85,11 @@ function generate() {
    runningInference = true;
 
     // Update the loadStatus log
-    loadStatus.innerHTML = 'Generating...';
+    generateStatus.innerHTML = 'Generating...';
 
     // Update the length and temperature span elements
     // lengthText.innerHTML = textLength.value;
-    temperatureText.innerHTML = tempSlider.value;
+    
 
     // Grab the original text
     let original = textInput.value;
@@ -97,7 +110,7 @@ function generate() {
 
       // Update the DOM elements with typed and generated text
       function gotData(err, result) {
-        loadStatus.innerHTML = 'Ready!';
+        generateStatus.innerHTML = 'Ready!';
         originalText.innerHTML = original;
         predictionText.innerHTML = result.sample;
         runningInference = false;
