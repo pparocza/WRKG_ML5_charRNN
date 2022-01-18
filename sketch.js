@@ -14,8 +14,9 @@ let charRNN;
 let loadStatus;
 let textInput;
 let tempSlider;
-let lengthSlider;
+let textLength;
 let runningInference = false;
+let modelSelection;
 
 let lengthText;
 let temperatureText;
@@ -24,12 +25,10 @@ let originalText;
 let predictionText;
 
 function setup() {
-  // Create the LSTM Generator passing it the model directory
-  charRNN = ml5.charRNN('models/Deep_Life/', modelReady);
 
   // Grab the DOM elements
   textInput = document.querySelector('#textInput');
-  lengthSlider = document.querySelector('#lenSlider');
+  textLength = document.querySelector('#textLength');
   tempSlider = document.querySelector('#tempSlider');
   loadStatus = document.querySelector('#loadStatus')
   lengthText = document.querySelector('#length');
@@ -37,15 +36,29 @@ function setup() {
   originalText = document.querySelector('#original');
   predictionText = document.querySelector('#prediction');
 
-  console.log(textInput)
+  modelSelection = document.querySelector('#modelSelection');
+
+  generateButton = document.querySelector('#generateButton');
+
+  console.log(textInput);
 
   // Run generate anytime something changes
-  textInput.addEventListener('change', generate);
-  lengthSlider.addEventListener('change', generate);
-  tempSlider.addEventListener('change', generate);
+  modelSelection.addEventListener('change', loadModel);
+  generateButton.onclick = generate;
+  // textInput.addEventListener('change', generate);
+  // textLength.addEventListener('change', generate);
+  // tempSlider.addEventListener('change', generate);
+
+  console.log(generateButton);
+
 }
 
 setup();
+
+function loadModel() {
+  // Create the LSTM Generator passing it the model directory
+  charRNN = ml5.charRNN('models/' + modelSelection.value + '/', modelReady);
+}
 
 function modelReady() {
   loadStatus.innerHTML = 'Model Loaded';
@@ -62,7 +75,7 @@ function generate() {
     loadStatus.innerHTML = 'Generating...';
 
     // Update the length and temperature span elements
-    lengthText.innerHTML = lengthSlider.value;
+    // lengthText.innerHTML = textLength.value;
     temperatureText.innerHTML = tempSlider.value;
 
     // Grab the original text
@@ -76,7 +89,7 @@ function generate() {
       let data = {
         seed: txt,
         temperature: tempSlider.value,
-        length: lengthSlider.value
+        length: textLength.value
       };
 
       // Generate text with the charRNN

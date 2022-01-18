@@ -8,16 +8,46 @@
   <style></style>
 </head>
 <body>
-    <h1>Interactive CharRNN Text Generation Example</h1>
-  <textarea id="textInput" style="width: 300px; height: 50px;" placeholder="type here"></textarea>
+    <h1>Interactive CharRNN Text Generation</h1>
+
+    <label for="cars">Choose a Model:</label>
+  
+    <select id="modelSelection">
+      <option value="Bluets">Bluets</option>
+      <option value="Deep_Life">Deep Life</option>
+      <option value="Dune">Dune</option>
+      <option value="Everyone_Dies_Young">Everyone Dies Young</option>
+      <option value="Metamorphosis">Metamorphosis</option>
+      <option value="Monday_or_Tuesday">Monday or Tuesday</option>
+      <option value="Rewire_your_brain">Rewire your brain</option>
+      <option value="Simple_Sabotage_Field_Manual">Simple Sabotage Field Manual</option>
+      <option value="The_Embodied_Mind">The Embodied Mind</option>
+      <option value="The_Footprints_of_the_Jesuits">The Footprints of the Jesuits</option>
+      <option value="The_History_of_Miss_Betsy_Thoughtless">The History of Miss Betsy Thoughtless</option>
+      <option value="The_History_of_Miss_Betsy_Thoughtless">The_Stranger</option>
+    </select>
+    <br><br>
+
+    <textarea id="textInput" style="width: 300px; height: 50px;" placeholder="type here"></textarea>
+    <br>
+
+
   <br /> length:
-  <input id="lenSlider" type="range" min="1" max="2000" value="20"                             /> <span id="length">20</span>
+  <textarea id="textLength">20</textarea>
+  <br>
+
   <br /> temperature:
   <input id="tempSlider" type="range" min="0" max="1" step="0.01"                             /><span id="temperature">0.5</span>
+
+  <br><br>
+  <button id="generateButton">Generate</button>
+
   <p id="loadStatus">Loading Model</p>
+
   <p id="result">
     <span id="original"></span><span id="prediction"></span>
   </p>
+  
   <script src="sketch.js"></script>
 </body>
 
