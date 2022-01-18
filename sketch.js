@@ -57,14 +57,11 @@ setup();
 function loadModel() {
   // Create the LSTM Generator passing it the model directory
   loadStatus.innerHTML = 'Loading Model';
-  generateStatus.innerHTML = '';
-  originalText.innerHTML = '';
-  predictionText.innerHTML = '';
-  textInput.value = '';
-  textLength.value = '';
-  temperature.value = 0.5;
-  temperatureText.innerHTML = 0.5;
   charRNN = ml5.charRNN('models/' + modelSelection.value + '/', modelReady);
+}
+
+function ResetUI(){
+  
 }
 
 function modelReady() {
